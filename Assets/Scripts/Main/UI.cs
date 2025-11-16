@@ -3,7 +3,7 @@ using UnityEngine;
 public class UI : MonoBehaviour
 {
     [SerializeField] private GameObject bottomPanel;
-    [SerializeField] private GameObject InDevelopmentPopUp;
+    [SerializeField] private PopupUI InDevelopmentPopUp;
     [SerializeField] private GameObject miningMinigame;
 
     private void Awake()
@@ -13,11 +13,13 @@ public class UI : MonoBehaviour
 
     public void OnMapClick()
     {
+        SoundManager.Instance.Play(SoundType.Click);
         AppController.Instance.MapClick();
     }
 
     public void OnHomeClick()
     {
+        SoundManager.Instance.Play(SoundType.Click);
         AppController.Instance.HomeClick();
     }
 
@@ -28,6 +30,7 @@ public class UI : MonoBehaviour
 
     public void OnCloseMinigameClick()
     {
+        SoundManager.Instance.Play(SoundType.Click);
         miningMinigame.SetActive(false);
     }
 
@@ -38,12 +41,14 @@ public class UI : MonoBehaviour
 
     public void OpenMinigame()
     {
+        SoundManager.Instance.Play(SoundType.Play);
         miningMinigame.SetActive(true);
     }
 
     public void ShowInDevelopmentPopUp()
     {
-        InDevelopmentPopUp.SetActive(true);
+        SoundManager.Instance.Play(SoundType.Error);
+        InDevelopmentPopUp.Show();
     }
 
 }

@@ -6,13 +6,17 @@ public class AppController : MonoBehaviour
     private static AppController _instance;
     public static AppController Instance => _instance;
 
+
     private UI _ui;
     private CameraRotator _cameraRotator;
+    private MoneyProvider _money;
+    public MoneyProvider Money => _money;
 
     public void Awake()
     {
         Debug.Log("AppController Awake");
         _instance = this;
+        _money = new MoneyProvider();
         DontDestroyOnLoad(this.gameObject);
         SceneManager.LoadScene(1);
     }

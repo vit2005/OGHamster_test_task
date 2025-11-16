@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class MiningMiniGame : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] TextMeshProUGUI money;
     [SerializeField] TextMeshProUGUI hash;
     [SerializeField] TextMeshProUGUI difficulty;
     [SerializeField] TextMeshProUGUI speed;
@@ -18,8 +17,9 @@ public class MiningMiniGame : MonoBehaviour
     [SerializeField] Button buyButton;
     [SerializeField] TextMeshProUGUI mineButtonText;
 
+    [SerializeField] CoinFlightManager animationManager;
+
     private bool _isMining = false;
-    private int _money = 0;
     private int _difficulty = 1;
     private int _speed = 1;
     private long _nonce = 0;
@@ -47,14 +47,19 @@ public class MiningMiniGame : MonoBehaviour
     {
         GenerateNewBlockData();
         UpdateUI();
-        buyButton.onClick.AddListener(OnBuyClick);
+        MoneyProvider.OnMoneyChanged += OnMoneyChanged;
+    }
+
+    private void OnMoneyChanged(int value)
+    {
+        buyButton.interactable = value >= SPEED_PRICE;
     }
 
     public void OnBuyClick()
     {
-        if (_money < SPEED_PRICE) return;
+        if (AppController.Instance.Money.Amount < SPEED_PRICE) return;
 
-        _money -= SPEED_PRICE;
+        AppController.Instance.Money.DecreaseMoney(SPEED_PRICE);
         _speed += SPEED_INCREASE;
         UpdateUI();
         UpdateFontSizeBySpeed();
@@ -96,7 +101,6 @@ public class MiningMiniGame : MonoBehaviour
 
     private void Update()
     {
-        buyButton.interactable = _money >= SPEED_PRICE;
 
         if (!_isMining)
             return;
@@ -161,9 +165,10 @@ public class MiningMiniGame : MonoBehaviour
 
     private void OnBlockFound()
     {
-        _money += 1;
+        animationManager.LaunchCoin();
+
         AddLog($"\n<color=\"green\">+1 SAT</color>");
-        if (_money >= SPEED_PRICE)
+        if (AppController.Instance.Money.Amount >= SPEED_PRICE)
             AddLog($"\n<color=\"green\">(BUY MORE SPEED)</color>");
 
         // блок знайдено швидше, ніж прогресбар встигнув заповнитись
@@ -245,7 +250,6 @@ public class MiningMiniGame : MonoBehaviour
 
     private void UpdateUI()
     {
-        money.SetText($"{_money}");
         difficulty.SetText($"{_difficulty}");
         speed.SetText($"{_speed} H/s");
     }
