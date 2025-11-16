@@ -34,7 +34,7 @@ public class MiningMiniGame : MonoBehaviour
     private const int FAIL_THRESHOLD = 20;
     private const int MAX_LOG_LINES = 30;
 
-
+    private bool _showEachBlock = true;
     private int _successes = 0;
     private int _failures = 0;
     private int _current_fail_threshold = 0;
@@ -60,11 +60,16 @@ public class MiningMiniGame : MonoBehaviour
         UpdateFontSizeBySpeed();
     }
 
+    public void OnShowEachBlockToggle(bool value)
+    {
+        _showEachBlock = value;
+    }
+
     private void UpdateFontSizeBySpeed()
     {
-        // speed = 1 → 30, speed = 14 → 15
+        // speed = 1 → 30, speed = 14 → 12
         float t = Mathf.InverseLerp(1f, 14f, _speed);
-        int fontSize = Mathf.RoundToInt(Mathf.Lerp(30f, 15f, t));
+        int fontSize = Mathf.RoundToInt(Mathf.Lerp(30f, 12f, t));
 
         log.fontSize = fontSize;
     }
@@ -78,14 +83,16 @@ public class MiningMiniGame : MonoBehaviour
             mineButtonText.SetText("START");
     }
 
+
     private void AddLog(string line)
     {
         _logLines.Enqueue(line);
         if (_logLines.Count > MAX_LOG_LINES)
             _logLines.Dequeue();
 
-        AddLog(string.Join("\n", _logLines));
+        log.text = string.Join("", _logLines);
     }
+
 
     private void Update()
     {
@@ -123,6 +130,7 @@ public class MiningMiniGame : MonoBehaviour
                 if (_failures >= DIFFICULTY_DECREASE_CHANGE)
                 {
                     _difficulty = Mathf.Max(0, _difficulty - 1);
+                    UpdateUI();
                     AddLog(log.text += "\n<color=\"green\">DIFFICULTY DECREASED</color>\n");
                     _failures = 0;
                 }
@@ -145,7 +153,7 @@ public class MiningMiniGame : MonoBehaviour
         }
         else
         {
-            AddLog($"\n{HighlightHash(h, false)}");
+            if (_showEachBlock) AddLog($"\n{HighlightHash(h, false)}");
             _failTicks++;
         }
             
@@ -174,12 +182,14 @@ public class MiningMiniGame : MonoBehaviour
         if (_successes >= DIFFICULTY_INCREASE_CHANGE)
         {
             _difficulty++;
+            UpdateUI();
             AddLog("\n\n<color=\"red\">DIFFICULTY INCREASED</color>");
             _successes = 0;
         }
         else if (_failures >= DIFFICULTY_DECREASE_CHANGE)
         {
             _difficulty = Mathf.Max(0, _difficulty - 1);
+            UpdateUI();
             _failures = 0;
         }
 
@@ -237,7 +247,7 @@ public class MiningMiniGame : MonoBehaviour
     {
         money.SetText($"{_money}");
         difficulty.SetText($"{_difficulty}");
-        speed.SetText($"{_speed}");
+        speed.SetText($"{_speed} H/s");
     }
 
     private static readonly MD5 md5 = MD5.Create();
