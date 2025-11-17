@@ -58,8 +58,7 @@ public class CoinFlightManager : MonoBehaviour
         coin.transform.position = StartPoint.position;
         coin.SetActive(true);
 
-        // Летить
-        coin.transform
+        var tween = coin.transform
             .DOMove(EndPoint.position, FlyDuration)
             .SetEase(FlyEase)
             .OnComplete(() =>

@@ -38,4 +38,9 @@ public class CameraRotator : MonoBehaviour
             .DORotate(targetRotation, RotateDuration)
             .SetEase(RotateEase);
     }
+
+    private void OnDestroy()
+    {
+        _currentTween?.Kill();
+    }
 }

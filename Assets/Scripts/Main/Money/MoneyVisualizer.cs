@@ -26,4 +26,9 @@ public class MoneyVisualizer : MonoBehaviour
             .DOScale(ScorePopScale, ScorePopDuration)
             .SetLoops(2, LoopType.Yoyo);
     }
+
+    private void OnDestroy()
+    {
+        MoneyProvider.OnMoneyChanged -= UpdateMoneyDisplay;
+    }
 }
