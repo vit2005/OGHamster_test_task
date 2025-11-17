@@ -67,6 +67,7 @@ namespace MiningMiniGame
         {
             if (AppController.Instance.Money.Amount < config.SpeedUpPrice) return;
 
+            SoundManager.Instance.Play(SoundType.Purchase);
             AppController.Instance.Money.DecreaseMoney(config.SpeedUpPrice);
             _speed += config.SpeedUpAmountIncrease;
             UpdateUI();

@@ -8,7 +8,8 @@ public enum SoundType
     Play,
     Coin,
     Error,
-    // ³ ò.ä.
+    Purchase,
+
 }
 
 
