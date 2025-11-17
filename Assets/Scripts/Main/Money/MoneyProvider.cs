@@ -13,7 +13,7 @@ public class MoneyProvider
             PlayerPrefs.SetInt("Money", 0);
 
         _amount = PlayerPrefs.GetInt("Money");
-    } //TODO: Add saving on ApplicationClosed
+    }
 
     public void IncreaseMoney(int amount = 1)
     {
@@ -31,5 +31,11 @@ public class MoneyProvider
         }
             
         OnMoneyChanged?.Invoke(_amount);
+    }
+
+    public void Save()
+    {
+        PlayerPrefs.SetInt("Money", _amount);
+        PlayerPrefs.Save();
     }
 }

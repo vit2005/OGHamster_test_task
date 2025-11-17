@@ -5,7 +5,7 @@ public class PopupUI : MonoBehaviour
 {
     [Header("Animation")]
     public float Duration = 0.35f;
-    public Ease EaseType = Ease.OutBack; // OutBack = красиво і професійно
+    public Ease EaseType = Ease.OutBack;
     public float StartScale = 0.7f;
 
     [SerializeField] private CanvasGroup group;
@@ -13,19 +13,15 @@ public class PopupUI : MonoBehaviour
 
     public void Show()
     {
-        // На всяк випадок — стопаємо все старе
         showTween?.Kill(true);
 
-        // Підготовка
         transform.localScale = Vector3.one * StartScale;
         group.alpha = 0f;
         gameObject.SetActive(true);
 
-        // Анімація
         showTween = DOTween.Sequence()
             .Join(group.DOFade(1f, Duration * 0.8f))                   // Fade-in
-            .Join(transform.DOScale(1f, Duration).SetEase(EaseType))  // Zoom-out
-            .SetUpdate(true); // Щоб працювало навіть на паузі, якщо треба
+            .Join(transform.DOScale(1f, Duration).SetEase(EaseType));  // Zoom-out
     }
 
     public void Hide()

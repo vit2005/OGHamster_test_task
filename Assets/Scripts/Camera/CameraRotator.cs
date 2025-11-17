@@ -32,10 +32,8 @@ public class CameraRotator : MonoBehaviour
 
     private void RotateTo(Vector3 targetRotation)
     {
-        // якщо користувач передумав Ч прибиваЇмо попередн≥й тв≥н
         _currentTween?.Kill();
 
-        // —тартуЇмо новий
         _currentTween = _cam
             .DORotate(targetRotation, RotateDuration)
             .SetEase(RotateEase);

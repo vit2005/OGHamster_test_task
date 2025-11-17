@@ -18,9 +18,8 @@ public class MoneyVisualizer : MonoBehaviour
     {
         moneyText.SetText(obj.ToString());
 
-        // Візуальний "поп"
-        moneyText.transform
-            .DOKill(); // Щоб ефект не стакався при спамі
+        // Visual effect
+        moneyText.transform.DOKill(); 
         moneyText.transform.localScale = Vector3.one;
 
         moneyText.transform

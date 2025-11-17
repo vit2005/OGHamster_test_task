@@ -4540,6 +4540,7 @@ MonoBehaviour:
   buyButton: {fileID: 2118532359}
   mineButtonText: {fileID: 1361141606}
   animationManager: {fileID: 1119898196}
+  config: {fileID: 11400000, guid: b5dcf791a8008d64594096b1c92948ef, type: 2}
 --- !u!114 &1119898196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6849,7 +6850,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0ec859b61dc3df64390d015f31f53e7e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c0d5a41da01b6434b9adf1753d3b54c6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

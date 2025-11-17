@@ -9,11 +9,11 @@ public class MainRaycaster : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            // --- Головний фільтр: клік по UI ---
+            // Check if the click is over UI, and ignore it if so
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
                 return;
 
-            // Для мобілки:
+            // For touch input, also check if over UI
             if (Input.touchCount > 0)
             {
                 Touch touch = Input.GetTouch(0);
@@ -21,7 +21,7 @@ public class MainRaycaster : MonoBehaviour
                     return;
             }
 
-            // --- Далі вже наш 3D клік ---
+            // Now perform the raycast
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {

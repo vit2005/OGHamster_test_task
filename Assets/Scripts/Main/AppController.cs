@@ -17,6 +17,7 @@ public class AppController : MonoBehaviour
         Debug.Log("AppController Awake");
         _instance = this;
         _money = new MoneyProvider();
+        _money.Init();
         DontDestroyOnLoad(this.gameObject);
         SceneManager.LoadScene(1);
     }
@@ -49,5 +50,11 @@ public class AppController : MonoBehaviour
     public void OpenKYC()
     {
         _ui.OpenKnowYourClient();
+    }
+
+    private void OnApplicationQuit()
+    {
+        // TODO: uncomment on release
+        // _money.Save();
     }
 }
