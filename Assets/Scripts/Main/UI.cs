@@ -11,41 +11,49 @@ public class UI : MonoBehaviour
         AppController.Instance.RegisterUI(this);
     }
 
+    // Setted from editor
     public void OnMapClick()
     {
         SoundManager.Instance.Play(SoundType.Click);
         AppController.Instance.MapClick();
     }
 
+    // Setted from editor
     public void OnHomeClick()
     {
         SoundManager.Instance.Play(SoundType.Click);
         AppController.Instance.HomeClick();
     }
 
+    // Setted from editor
     public void OnVolumeClick()
     {
         ShowInDevelopmentPopUp();
     }
 
-    public void OnCloseMinigameClick()
-    {
-        SoundManager.Instance.Play(SoundType.Click);
-        miningMinigame.SetActive(false);
-    }
-
+    // Called from AppController
     public void OpenKnowYourClient()
     {
         ShowInDevelopmentPopUp();
     }
 
+    // Called from AppController
     public void OpenMinigame()
     {
         SoundManager.Instance.Play(SoundType.Play);
         miningMinigame.SetActive(true);
+        bottomPanel.SetActive(false);
     }
 
-    public void ShowInDevelopmentPopUp()
+    // Setted from editor
+    public void OnCloseMinigameClick()
+    {
+        SoundManager.Instance.Play(SoundType.Click);
+        bottomPanel.SetActive(true);
+        miningMinigame.SetActive(false);
+    }
+
+    private void ShowInDevelopmentPopUp()
     {
         SoundManager.Instance.Play(SoundType.Error);
         InDevelopmentPopUp.Show();
