@@ -231,7 +231,7 @@ namespace MiningMiniGame
 
         /// <summary>
         /// Highlights the leading characters of the hash to visually indicate whether they meet the difficulty requirement.
-        /// <summary>
+        /// </summary>
         private string HighlightHash(string h, bool positive)
         {
             if (_difficulty <= 0)
